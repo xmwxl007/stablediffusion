@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>店面选址登记表</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --card: rgba(255, 255, 255, 0.1);
+      --line: rgba(255, 255, 255, 0.22);
+      --text: #eef2ff;
+      --muted: #b8c1e3;
+      --brand: #7c9cff;
+      --brand-2: #63e6d5;
+      --ok: #29d37a;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 0%, rgba(99, 230, 213, 0.16), transparent 35%),
+        radial-gradient(circle at 90% 100%, rgba(124, 156, 255, 0.2), transparent 30%),
+        linear-gradient(145deg, #050812, var(--bg) 60%, #101a36);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .panel {
+      width: min(920px, 100%);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 30px;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+      box-shadow: 0 18px 55px rgba(0, 0, 0, 0.4);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(24px, 4vw, 32px);
+      letter-spacing: 1px;
+    }
+
+    .subtitle {
+      margin: 10px 0 24px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .full { grid-column: 1 / -1; }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: rgba(0, 0, 0, 0.22);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 11px 12px;
+      font-size: 14px;
+      outline: none;
+      transition: 0.2s border-color, 0.2s box-shadow;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(124, 156, 255, 0.2);
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 12px;
+      padding: 11px 18px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.2s transform, 0.2s opacity;
+    }
+
+    .ghost {
+      background: rgba(255, 255, 255, 0.12);
+      color: var(--text);
+    }
+
+    .primary {
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      color: #081225;
+      font-weight: 700;
+    }
+
+    button:hover { transform: translateY(-1px); }
+    button:active { transform: translateY(0); opacity: 0.9; }
+
+    .tip {
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--ok);
+      min-height: 20px;
+    }
+
+    @media (max-width: 700px) {
+      .panel { padding: 22px; }
+      form { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <section class="panel">
+    <h1>店面选址登记表</h1>
+    <p class="subtitle">用于门店拓展评估，信息提交后可直接进入选址分析流程。</p>
+
+    <form id="siteForm">
+      <div>
+        <label for="storeName">意向门店名称</label>
+        <input id="storeName" name="storeName" required placeholder="如：星河广场店" />
+      </div>
+      <div>
+        <label for="city">城市 / 区域</label>
+        <input id="city" name="city" required placeholder="如：上海市 浦东新区" />
+      </div>
+
+      <div>
+        <label for="address">详细地址</label>
+        <input id="address" name="address" required placeholder="街道、楼层、门牌" />
+      </div>
+      <div>
+        <label for="rent">预计月租（元）</label>
+        <input id="rent" name="rent" type="number" min="0" placeholder="50000" />
+      </div>
+
+      <div>
+        <label for="area">使用面积（㎡）</label>
+        <input id="area" name="area" type="number" min="0" placeholder="180" />
+      </div>
+      <div>
+        <label for="traffic">日均客流预估</label>
+        <select id="traffic" name="traffic" required>
+          <option value="">请选择</option>
+          <option>低（<500）</option>
+          <option>中（500-1500）</option>
+          <option>高（1500-3000）</option>
+          <option>极高（>3000）</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="competitor">周边竞品数量（1公里）</label>
+        <input id="competitor" name="competitor" type="number" min="0" placeholder="3" />
+      </div>
+      <div>
+        <label for="contact">提交人联系方式</label>
+        <input id="contact" name="contact" required placeholder="手机号 / 邮箱" />
+      </div>
+
+      <div class="full">
+        <label for="comment">补充说明</label>
+        <textarea id="comment" name="comment" placeholder="停车条件、商圈级别、物业配套等"></textarea>
+      </div>
+
+      <div class="full actions">
+        <button type="reset" class="ghost">重置</button>
+        <button type="submit" class="primary">提交登记</button>
+      </div>
+    </form>
+
+    <p class="tip" id="tip"></p>
+  </section>
+
+  <script>
+    const form = document.getElementById('siteForm');
+    const tip = document.getElementById('tip');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      tip.textContent = '✅ 提交成功：选址登记信息已记录。';
+      form.reset();
+    });
+  </script>
+</body>
+</html>
